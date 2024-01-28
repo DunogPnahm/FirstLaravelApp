@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Product;
+use GuzzleHttp\Handler\Proxy;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,29 @@ Route::get('/', function () {
 });
 
 Route::get('/Page1', function () {
-    return view('Page1');
+    return view('Page1', [
+        'heading' => 'Header',
+        'list' => [
+            [
+                'id' => 1,
+                'name' => 'lmao',
+                'city' => 'Hanoi'
+            ],
+            [
+                'id' => 2,
+                'name' => 'DunogPnahm',
+                'city' => 'Hanoi'
+            ]
+        ],
+        'prodList' => Product::all(),
+        'firstProd' => Product::find(2)
+    ]);
+});
+
+Route::get('/Page2/{i}', function($i) {
+    return view('Page2', [
+        'prod' => Product::find($i)
+    ]);
 });
 
 Route::get('/Bruh/{i}', function ($i) {
